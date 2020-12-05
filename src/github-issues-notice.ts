@@ -43,7 +43,6 @@ export class GithubIssuesNotice {
     return this.pSheet
   }
 
-
   private get reportSheet(): GoogleAppsScript.Spreadsheet.Sheet {
     if (this.pReportSheet === undefined) {
       const s = SpreadsheetApp.openById(this.config.spreadsheets.id)
@@ -52,6 +51,7 @@ export class GithubIssuesNotice {
 
     return this.pReportSheet
   }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private get data(): any[][] {
     if (this.pData === undefined) {
@@ -172,7 +172,8 @@ export class GithubIssuesNotice {
 
   public doJob(): void {
     if (GithubIssuesNotice.IS_HOLIDAY(this.config.now)) {
-      return
+      // debug
+      //return
     }
 
     const job = this.getJobByMatchedTime()
@@ -523,7 +524,8 @@ export class GithubIssuesNotice {
             ? time.substr(minStart, timeLength)
             : '00'
 
-        if (hour === nowH && min === nowM) {
+        // debug
+        if (true) {
           const labels: Label[] = []
           for (const l of labelsWithInfo) {
             const arr = `${l}`.split('/')
