@@ -43,6 +43,15 @@ export class GithubIssuesNotice {
     return this.pSheet
   }
 
+
+  private get reportSheet(): GoogleAppsScript.Spreadsheet.Sheet {
+    if (this.pReportSheet === undefined) {
+      const s = SpreadsheetApp.openById(this.config.spreadsheets.id)
+      this.pReportSheet = s.getSheetByName('report')
+    }
+
+    return this.pReportSheet
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private get data(): any[][] {
     if (this.pData === undefined) {
@@ -63,6 +72,7 @@ export class GithubIssuesNotice {
 
   public config: Config
   private pSheet: GoogleAppsScript.Spreadsheet.Sheet
+  private pReportSheet: GoogleAppsScript.Spreadsheet.Sheet
   private pSlack: Slack
   private pGithub: Github
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
