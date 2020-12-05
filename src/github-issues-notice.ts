@@ -232,45 +232,29 @@ export class GithubIssuesNotice {
       for (const l of task.labels) {
         try {
           const labels = l.name
-          if (!task.onlyPulls) {
-            // Issues without Pull Request
-            const state = task.labelProtection ? 'all' : 'open'
-            const issues = this.github.issues(repo, { labels, state })
-            for (const i of issues) {
-              if (Github.IsPullRequestIssue(i)) {
-                continue
-              }
-              for (const ll of i.labels) {
-                if (l.name === ll.name) {
-                  l.color = ll.color
-                }
-              }
-              const warn =
-                task.labelProtection && i.state === 'closed'
-                  ? ':warning: Closed: '
-                  : ''
-              l.issueTitles.push(
-                `${warn}<${i.html_url}|${i.title}> (${displayRepo}) by ${
-                  i.user.login
-                }${task.relations ? this.buildIssueRelations(i) : ''}`
-              )
+          const state = task.labelProtection ? 'all' : 'open'
+          const issues = this.github.issues(repo, { labels, state })
+          for (const i of issues) {
+            if (Github.IsPullRequestIssue(i)) {
+              continue
             }
-          }
-          // Pull Requests without Draft
-          const pulls = this.github.pullsWithoutDraftAndOnlySpecifiedLabels(
-            repo,
-            { labels }
-          )
-          for (const i of pulls) {
-            for (const ll of i.labels) {
-              if (l.name === ll.name) {
-                l.color = ll.color
-              }
-            }
+            const service = ""
+            const category = ""
+            const requesting_team = ""
+            const reqtime = ""
+            const plan_name = ""
+            const assignee = ""
             l.issueTitles.push(
-              `<${i.html_url}|${i.title}> (${displayRepo}) by ${i.user.login}${
-                task.relations ? this.buildPullRelations(i) : ''
-              }`
+              [
+                i.created_at,
+                i.html_url,
+                service,
+                category,
+                requesting_team,
+                reqtime,
+                plan_name,
+                i.assignee.login
+              ]
             )
           }
         } catch (e) {
@@ -278,7 +262,8 @@ export class GithubIssuesNotice {
         }
       }
     }
-    this.notify(task)
+    // debug
+    this.report(task)
   }
 
   private buildIssueRelations(i: Issue): string {
@@ -347,6 +332,27 @@ export class GithubIssuesNotice {
         text: `${this.config.slack.textEmpty}${this.config.slack.textSuffix}${updatedAt}`,
         ts: ts,
       })
+    }
+  }
+
+  // todo:
+  // - 日付のJST変換
+  // - 重複登録回避
+  //   取得したissueがreportシートに重複して登録されないように取得タイミングを1日1回などにし
+  //   前日に作成されたissueをまとめて記録されるようにする
+  //   または前回実行時から今までに作成されたissueのみを記録するようにする
+  // - サービス名などはラベル名から動的に設定
+  private report(task: Task) {
+    for (const l of task.labels) {
+      // 最終行を取得
+      const startColumn = "A";
+      const endColumn   = "H";
+      const lastRow = this.reportSheet.getLastRow();
+      const nextRow = lastRow + 1;
+      const setRange = `${startColumn}${nextRow}:${endColumn}${nextRow}`;
+
+      // issue情報の書き込み
+      this.reportSheet.getRange(setRange).setValues(l.issueTitles);
     }
   }
 
