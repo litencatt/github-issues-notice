@@ -239,6 +239,8 @@ export class GithubIssuesNotice {
             if (Github.IsPullRequestIssue(i)) {
               continue
             }
+            const ts = Date.parse(i.created_at)
+            const created_at = new Date(ts)
             const service = ""
             const category = ""
             const requesting_team = ""
@@ -247,7 +249,7 @@ export class GithubIssuesNotice {
             const assignee = ""
             l.issueTitles.push(
               [
-                i.created_at,
+                created_at.toLocaleDateString(),
                 i.html_url,
                 service,
                 category,
