@@ -219,17 +219,6 @@ export class GithubIssuesNotice {
         this.tidyUpIssues(repo, task)
       }
 
-      if (task.stats.enabled) {
-        const i = this.github.issues(repo)
-        const p = this.github.pulls(repo)
-        const labels = 'proactive'
-        const a = this.github.issues(repo, { labels })
-        task.stats.issues = task.stats.issues + i.length
-        task.stats.pulls = task.stats.pulls + p.length
-        task.stats.proactive = task.stats.proactive + a.length
-      }
-      const displayRepo = task.showOrg ? repo : repo.split('/').pop()
-
       for (const l of task.labels) {
         try {
           const labels = l.name
@@ -363,7 +352,8 @@ export class GithubIssuesNotice {
       const startColumn = "A";
       const endColumn   = "H";
       const lastRow = this.reportSheet.getLastRow();
-      const nextRow = lastRow + 1;
+      const nextRowStart = lastRow + 1;
+      const nextRowEnd   = lastRow + l.issueTitles.length;
       const setRange = `${startColumn}${nextRow}:${endColumn}${nextRow}`;
 
       // issue情報の書き込み
