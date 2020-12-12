@@ -229,12 +229,10 @@ export class GithubIssuesNotice {
               continue
             }
 
-            // 昨日以前に作成されたissueはskip
             const ts = Date.parse(i.created_at)
-            const now = new Date();
-            const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
-            if (ts < yesterday.getTime()) {
-              continue
+            const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+            if (ts < oneDayAgo) {
+              //continue
             }
 
             const created_at = new Date(ts).toLocaleDateString()
