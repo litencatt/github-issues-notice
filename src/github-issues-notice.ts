@@ -354,7 +354,7 @@ export class GithubIssuesNotice {
       const lastRow = this.reportSheet.getLastRow();
       const nextRowStart = lastRow + 1;
       const nextRowEnd   = lastRow + l.issueTitles.length;
-      const setRange = `${startColumn}${nextRow}:${endColumn}${nextRow}`;
+      const setRange = `${startColumn}${nextRowStart}:${endColumn}${nextRowEnd}`;
 
       // issue情報の書き込み
       this.reportSheet.getRange(setRange).setValues(l.issueTitles);
