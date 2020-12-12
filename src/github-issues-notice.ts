@@ -529,8 +529,8 @@ export class GithubIssuesNotice {
             ? time.substr(minStart, timeLength)
             : '00'
 
-        // debug
-        if (true) {
+        // Execute hourly
+        if (nowM == '00') {
           const labels: Label[] = []
           for (const l of labelsWithInfo) {
             const arr = `${l}`.split('/')
