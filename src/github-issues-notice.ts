@@ -238,7 +238,7 @@ export class GithubIssuesNotice {
             // GAS実行環境向けの日時変換対応
             const jstOffset = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000;
             const ca = new Date(ts + jstOffset);
-            const created_at = ca.toLocaleDateString()
+            const created_at = ca.toLocaleString()
             const service = ""
             const category = ""
             const requesting_team = ""
