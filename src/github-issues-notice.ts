@@ -239,7 +239,15 @@ export class GithubIssuesNotice {
             if (Github.IsPullRequestIssue(i)) {
               continue
             }
+
+            // 昨日以前に作成されたissueはskip
             const ts = Date.parse(i.created_at)
+            const now = new Date();
+            const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
+            if (ts < yesterday.getTime()) {
+              continue
+            }
+
             const created_at = new Date(ts)
             const service = ""
             const category = ""
