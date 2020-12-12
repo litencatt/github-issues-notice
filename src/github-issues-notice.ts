@@ -237,7 +237,7 @@ export class GithubIssuesNotice {
               continue
             }
 
-            const created_at = new Date(ts)
+            const created_at = new Date(ts).toLocaleDateString()
             const service = ""
             const category = ""
             const requesting_team = ""
@@ -249,7 +249,7 @@ export class GithubIssuesNotice {
             }
             l.issueTitles.push(
               [
-                created_at.toLocaleDateString(),
+                created_at,
                 service,
                 i.html_url,
                 category,
