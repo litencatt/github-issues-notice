@@ -345,7 +345,10 @@ export class GithubIssuesNotice {
   // - サービス名などはラベル名から動的に設定
   private report(task: Task) {
     for (const l of task.labels) {
-      // 最終行を取得
+      if (l.issueTitles.length === 0) {
+        continue
+      }
+
       const startColumn = "A";
       const endColumn   = "H";
       const lastRow = this.reportSheet.getLastRow();
