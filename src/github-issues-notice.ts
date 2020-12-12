@@ -243,10 +243,9 @@ export class GithubIssuesNotice {
             const requesting_team = ""
             const processing_time = ""
             const product = ""
+            let assignee = ""
             if (i.assignee !== null) {
-              const assignee = i.assignee.login
-            } else {
-              const assignee = ""
+              assignee = i.assignee.login
             }
             l.issueTitles.push(
               [
