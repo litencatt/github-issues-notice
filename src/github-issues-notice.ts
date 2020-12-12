@@ -252,19 +252,23 @@ export class GithubIssuesNotice {
             const service = ""
             const category = ""
             const requesting_team = ""
-            const reqtime = ""
-            const plan_name = ""
-            const assignee = ""
+            const processing_time = ""
+            const product = ""
+            if (i.assignee !== null) {
+              const assignee = i.assignee.login
+            } else {
+              const assignee = ""
+            }
             l.issueTitles.push(
               [
                 created_at.toLocaleDateString(),
-                i.html_url,
                 service,
+                i.html_url,
                 category,
                 requesting_team,
-                reqtime,
-                plan_name,
-                i.assignee.login
+                processing_time,
+                product,
+                assignee
               ]
             )
           }
