@@ -232,9 +232,9 @@ export class GithubIssuesNotice {
             }
 
             const ts = Date.parse(i.created_at)
-            const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
-            if (ts < oneDayAgo) {
-              //continue
+            const oneHourAgo = Date.now() - 1 * 60 * 60 * 1000;
+            if (ts < oneHourAgo) {
+              continue
             }
 
             // GAS実行環境向けの日時変換対応
