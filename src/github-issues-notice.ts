@@ -211,7 +211,7 @@ export class GithubIssuesNotice {
 
   private doTask(task: Task) {
     const jstOffset = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000;
-    this.reportSheet.getRange("I1").setValue(Date(Date.now()+jstOffset).toLocaleString());
+    this.reportSheet.getRange("I1").setValue(Date(Date.now()+jstOffset).toLocaleString("ja"));
     for (const repo of task.repos) {
       if (repo === '') {
         continue
@@ -240,7 +240,7 @@ export class GithubIssuesNotice {
             // GAS実行環境向けの日時変換対応
             const jstOffset = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000;
             const ca = new Date(ts + jstOffset);
-            const created_at = ca.toLocaleString()
+            const created_at = ca.toLocaleString("ja")
             const service = ""
             const category = ""
             const requesting_team = ""
