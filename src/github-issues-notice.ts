@@ -253,6 +253,7 @@ export class GithubIssuesNotice {
                 created_at,
                 service,
                 i.html_url,
+                i.title,
                 category,
                 requesting_team,
                 processing_time,
@@ -353,7 +354,7 @@ export class GithubIssuesNotice {
       }
 
       const startColumn = "A";
-      const endColumn   = "H";
+      const endColumn   = "I";
       const lastRow = this.reportSheet.getLastRow();
       const nextRowStart = lastRow + 1;
       const nextRowEnd   = lastRow + l.issueTitles.length;
