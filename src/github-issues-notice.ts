@@ -211,7 +211,7 @@ export class GithubIssuesNotice {
 
   private doTask(task: Task) {
     const jstOffset = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000;
-    this.reportSheet.getRange("I1").setValue(Date(Date.now()+jstOffset).toLocaleString("ja"));
+    this.reportSheet.getRange("J1").setValue(Date(Date.now()+jstOffset).toLocaleString("ja"));
     for (const repo of task.repos) {
       if (repo === '') {
         continue
